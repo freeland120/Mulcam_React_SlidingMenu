@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/redux/4.0.5/redux.js"></script>
+  </head>
+  <body>
+    <input />
+    <button id="addBtn">add</button> <br />
+    <button id="deleteBtn">delete</button><br />
+    <div></div>
+    <script>
+        function reducer(state,action){ //2 reducer 작성
+            if(state===undefined){
+                state=[],
+            }
+            if(action.type==="add"){
+               return state.concat(action.value); //concat은 원래 인자가 몇개 들어간 배열이 있었는데 원본배열은 그대로 있고 복사를 하고 추가를 해서 돌려줌 원본배열은 그대로!
+            }else if(action.type==="delete"){
+                return state.filter((item)=>{
+                  return item !== action.val
+                });
+            }else {
+                return state;
+            }
+
+
+        }
+        const store=Redux.createStore(reducer); //1. 스토어 생성
+        const state=store.getState(); // 3.스테이트 얻기
+
+        $(document).ready(function(){
+
+            store.subscribe(function(){ //4. 스토어 구독
+              $('div').text(state);
+            });
+
+
+            $('#addBtn').click(function(){
+                const data=$('input').val();
+                const action={
+                    type:"add",
+                    value:data
+                };
+
+            $("#deleteBtn").click(function(){
+              const data=$('input').val();
+                const action={
+                    type:"delete",
+                    value:data
+                };
+      });
+                store.dispatch(action); // 5.스토어에 액션 전달
+                console.log(state);
+                $('input').val('');
+            });
+        });
+    </script>
+  </body>
+</html>

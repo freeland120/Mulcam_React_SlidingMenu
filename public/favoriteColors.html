@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/redux/4.0.5/redux.js"></script>
+  </head>
+  <body>
+    <script>
+      function addColor(value) {
+        return {
+          type: "ADD",
+          color: value
+        };
+      }
+      function removeColor(value) {
+        return {
+          type: "REMOVE",
+          color: value
+        };
+      }
+
+      function favoriteColors(state, action) {
+        if (state === undefiend) {
+          state = [];
+        }
+        if (action.type === "ADD") {
+          return state.concat(action.color);
+        } else if (action.type === "REMOVE") {
+          return state.filter(function(item) {
+            return item !== action.color;
+          });
+        } else {
+          return state;
+        }
+      }
+
+      const store = Redux.createStore(favoriteColors);
+      store.subscribe(render);
+
+      function render() {
+        console.log(store.getState());
+      }
+
+      sotre.dispatch(addColor("blue"));
+      sotre.dispatch(addColor("red"));
+      sotre.dispatch(addColor("green"));
+      sotre.dispatch(addColor("yellow"));
+      sotre.dispatch(addColor("black"));
+      sotre.dispatch(addColor("white"));
+
+      console.log(store.getState());
+    </script>
+  </body>
+</html>
