@@ -6,6 +6,9 @@ import { NavLink, HashRouter } from "react-router-dom";
 import {} from "jquery.cookie";
 import axios from "axios";
 
+axios.defaults.withCredentials = true;
+const headers = { withCredentials: true };
+
 class Menu extends Component {
   state = {
     login_email: "",
@@ -15,38 +18,45 @@ class Menu extends Component {
 
   login = () => {
     const send_param = {
+      headers,
       email: this.emailE.value,
       pw: this.pwE.value
     };
-    $.post("http://localhost:8080/member/login", send_param, returnData => {
-      console.log(returnData);
-      if (returnData.message) {
-        $.cookie("login_name", returnData.message);
-        this.setState({
-          login_email: returnData.message,
-          loginStyle: "none",
-          logoutStyle: "inline-block"
-        });
-      } else {
-        alert("login fail");
-      }
-      this.emailE.value = "";
-      this.pwE.value = "";
-      this.emailE.focus();
-    });
+    axios
+      .post("http://localhost:8080/member/login", send_param)
+      .then(returnData => {
+        console.log(returnData);
+        if (returnData.data.message) {
+          $.cookie("login_name", returnData.data.message);
+          this.setState({
+            login_email: returnData.data.message,
+            loginStyle: "none",
+            logoutStyle: "inline-block"
+          });
+        } else {
+          alert("login fail");
+        }
+        this.emailE.value = "";
+        this.pwE.value = "";
+        this.emailE.focus();
+      });
   };
 
   logout = () => {
-    $.get("http://localhost:8080/member/logout", returnData => {
-      if (returnData.message) {
-        $.removeCookie("login_name");
-        this.setState({
-          login_email: "",
-          loginStyle: "inline-block",
-          logoutStyle: "none"
-        });
-      }
-    });
+    axios
+      .get("http://localhost:8080/member/logout", {
+        headers
+      })
+      .then(returnData => {
+        if (returnData.data.message) {
+          $.removeCookie("login_name");
+          this.setState({
+            login_email: "",
+            loginStyle: "inline-block",
+            logoutStyle: "none"
+          });
+        }
+      });
   };
 
   render() {
