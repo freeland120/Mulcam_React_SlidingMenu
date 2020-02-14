@@ -4,6 +4,7 @@ import $ from "jquery";
 import MenuButton from "./MenuButton";
 import { NavLink, HashRouter } from "react-router-dom";
 import {} from "jquery.cookie";
+import axios from "axios";
 
 class Menu extends Component {
   state = {
