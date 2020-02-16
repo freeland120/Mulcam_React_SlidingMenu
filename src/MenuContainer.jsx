@@ -65,7 +65,7 @@ class MenuContainer extends Component {
                 <NavLink to="/stuff">Stuff👜</NavLink>
               </li>
               <li>
-                <NavLink to="/contact">Contact📞</NavLink>
+                <NavLink to="/contact">Sign Up🌈</NavLink>
               </li>
             </ul>
             <div className="content">

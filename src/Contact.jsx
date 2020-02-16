@@ -5,13 +5,14 @@ class Contact extends Component {
     const send_param = {
       name: this.nameE.value,
       email: this.emailE_Contact.value,
-      pw: this.pwE_Contact.value,
-      comments: this.commentE.value
+      pw: this.pwE_Contact.value
+      //comments: this.commentE.value
     };
     axios
       .post("http://localhost:8080/member/insert", send_param)
       .then(returnData => {
-        if (returnData) {
+        console.log(returnData);
+        if (returnData.data.message) {
           this.setState({
             name: returnData.data.message
           });
@@ -34,7 +35,7 @@ class Contact extends Component {
     } else { */
     return (
       <div>
-        <h2>CONTACT</h2>
+        <h2>Sign Up</h2>
         <p>회원가입</p>
         이름
         <input ref={ref => (this.nameE = ref)} />

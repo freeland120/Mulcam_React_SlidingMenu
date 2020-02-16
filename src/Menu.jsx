@@ -122,6 +122,9 @@ class Menu extends Component {
           <h2>
             <a href="/">Search</a>
           </h2>
+          <h2>
+            <a href="/">Exit</a>
+          </h2>
         </HashRouter>
       </div>
     );
