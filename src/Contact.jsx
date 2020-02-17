@@ -1,6 +1,14 @@
 import React, { Component } from "react";
 import axios from "axios";
+
+axios.defaults.withCredentials = true;
+const headers = { withCredentials: true };
+
 class Contact extends Component {
+  state = {
+    name: ""
+  };
+
   memberInsert = () => {
     const send_param = {
       name: this.nameE.value,
@@ -26,33 +34,33 @@ class Contact extends Component {
   };
 
   render() {
-    /*  if (this.state.name) {
+    if (this.state.name) {
       return (
         <div>
           <h2>{this.state.name}님 회원 가입 되셨습니다!</h2>
         </div>
       );
-    } else { */
-    return (
-      <div>
-        <h2>Sign Up</h2>
-        <p>회원가입</p>
-        이름
-        <input ref={ref => (this.nameE = ref)} />
-        <br />
-        이메일
-        <input ref={ref => (this.emailE_Contact = ref)} />
-        <br />
-        비밀번호
-        <input ref={ref => (this.pwE_Contact = ref)} />
-        <br />
-        댓글
-        <input ref={ref => (this.commentE = ref)} />
-        <br />
-        <button onClick={this.memberInsert}>회원가입</button>
-      </div>
-    );
+    } else {
+      return (
+        <div>
+          <h2>Sign Up</h2>
+          <p>회원가입</p>
+          이름
+          <input ref={ref => (this.nameE = ref)} />
+          <br />
+          이메일
+          <input ref={ref => (this.emailE_Contact = ref)} />
+          <br />
+          비밀번호
+          <input ref={ref => (this.pwE_Contact = ref)} />
+          <br />
+          댓글
+          <input ref={ref => (this.commentE = ref)} />
+          <br />
+          <button onClick={this.memberInsert}>회원가입</button>
+        </div>
+      );
+    }
   }
 }
-
 export default Contact;

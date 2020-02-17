@@ -11,7 +11,7 @@ const headers = { withCredentials: true };
 
 class Menu extends Component {
   state = {
-    login_email: "",
+    login_nick: "",
     loginStyle: "inline-block",
     logoutStyle: "none"
   };
@@ -26,10 +26,11 @@ class Menu extends Component {
       .post("http://localhost:8080/member/login", send_param)
       .then(returnData => {
         console.log(returnData);
-        if (returnData.data.message) {
-          $.cookie("login_name", returnData.data.message);
+        if (returnData.data.nick) {
+          $.cookie("login_nick", returnData.data.nick);
+          $.cookie("login_id", returnData.data.id);
           this.setState({
-            login_email: returnData.data.message,
+            login_nick: send_param.email,
             loginStyle: "none",
             logoutStyle: "inline-block"
           });
@@ -49,9 +50,10 @@ class Menu extends Component {
       })
       .then(returnData => {
         if (returnData.data.message) {
-          $.removeCookie("login_name");
+          $.removeCookie("login_nick");
+          $.removeCookie("login_id");
           this.setState({
-            login_email: "",
+            login_nick: "",
             loginStyle: "inline-block",
             logoutStyle: "none"
           });
@@ -68,9 +70,9 @@ class Menu extends Component {
       display: this.state.logoutStyle
     };
 
-    let login_name;
-    if ($.cookie("login_name")) {
-      login_name = $.cookie("login_name");
+    let login_nick;
+    if ($.cookie("login_nick")) {
+      login_nick = $.cookie("login_nick");
       loginStyle.display = "none";
       logoutStyle.display = "inline-block";
     }
@@ -106,7 +108,7 @@ class Menu extends Component {
           </div>
 
           <div style={logoutStyle}>
-            {login_name}님 환영합니다.
+            {login_nick}님 환영합니다.
             <button onClick={this.logout}>Logout</button>
           </div>
 
